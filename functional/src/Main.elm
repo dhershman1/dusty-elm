@@ -17,13 +17,14 @@ main =
 type alias Model =
     { names : List String
     , nums : List Int
-    , results : List ( String, Int )
+    , zipped : List ( String, Int )
+    , lengthed : Int
     }
 
 
 model : Model
 model =
-    Model [ "Tom", "Sue", "Bob" ] [ 45, 31, 26 ] [ ( "", 0 ) ]
+    Model [ "Tom", "Sue", "Bob" ] [ 45, 31, 26 ] [ ( "", 0 ) ] 0
 
 
 zip : List a -> List b -> List ( a, b )
@@ -53,9 +54,11 @@ length list =
 view : Model -> Html Msg
 view model =
     div []
-        [ span [ myStyle ] [ text (toString model) ]
+        [ div [ myStyle ] [ text "Zipped: ", text (toString model.zipped) ]
+        , div [ myStyle ] [ text "Length: ", text (toString model.lengthed) ]
         , button [ onClick RunZip, btnStyles ] [ text "Zip" ]
         , button [ onClick RunLength, btnStyles ] [ text "Length" ]
+        , button [ onClick Reset, btnStyles ] [ text "Reset" ]
         ]
 
 
@@ -66,11 +69,7 @@ view model =
 type Msg
     = RunZip
     | RunLength
-
-
-ensureList : Int -> List ( String, Int )
-ensureList val =
-    [ ( "Length", val ) ]
+    | Reset
 
 
 stringList : List a -> List String
@@ -82,19 +81,25 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         RunZip ->
-            { model | results = zip model.names model.nums }
+            { model | zipped = zip model.names model.nums }
 
         RunLength ->
-            { model | results = ensureList (length (model.names ++ stringList model.nums)) }
+            { model | lengthed = length (model.names ++ stringList model.nums) }
+
+        Reset ->
+            { model
+                | zipped = [ ( "", 0 ) ]
+                , lengthed = 0
+            }
 
 
 btnStyles : Attribute msg
 btnStyles =
     style
-        [ ( "width", "50%" )
+        [ ( "width", "33%" )
         , ( "font-size", "1em" )
         , ( "text-align", "center" )
-        , ( "padding", "10px 0" )
+        , ( "padding", "10px 10px" )
         ]
 
 
