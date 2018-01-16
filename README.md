@@ -1,10 +1,15 @@
 # dusty-elm
 Little elm sandbox fun and experimentation
 
+## Install elm
+
+`npm i -g elm`
+
 ## Easy plug and play
 
 - cd into a small app (Each folder is its own app)
-- click on the `.html` file located in the app folder
+- run `elm make src/Main.elm --output=main.html`
+- open the newly generated html file
 
 ## Reactor and play
 
