@@ -14,11 +14,6 @@ main =
 -- MODEL
 
 
-type Either a b
-    = Left a
-    | Right b
-
-
 type alias Model =
     { names : List String
     , nums : List Int
