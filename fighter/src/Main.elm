@@ -24,9 +24,11 @@ main =
 
 type alias Character =
     { name : String
+    , class : String
     , health : Int
     , strength : Int
     , level : Int
+    , isTurn : Bool
     }
 
 
@@ -39,12 +41,12 @@ type alias Model =
 
 guard : Character
 guard =
-    Character "George" 55 15 12
+    Character "George" "Warrior" 55 15 12 False
 
 
 theif : Character
 theif =
-    Character "Fansico" 32 10 9
+    Character "Francisco" "Rogue" 32 10 9 True
 
 
 model : Model
@@ -77,7 +79,7 @@ update msg model =
             ( model, Random.generate NewFace (Random.int 1 6) )
 
         NewFace newFace ->
-            ( Model newFace, Cmd.none )
+            ( { model | dieFace = newFace }, Cmd.none )
 
 
 
