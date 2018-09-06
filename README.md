@@ -3,6 +3,8 @@ Little elm sandbox fun and experimentation
 
 **Updated for v0.19.0** of Elm
 
+> **Side Note** It is very broken right now, I am in the middle of re factoring how a lot of this works which requires me to rethink the process of each experiement
+
 ## Usage
 
 - cd into a small app (Each folder is its own app)
