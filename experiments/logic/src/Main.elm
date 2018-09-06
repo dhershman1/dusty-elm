@@ -1,13 +1,9 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), checkbox, init, main, update, view)
 
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-
-
-main : Program Never Model Msg
-main =
-    beginnerProgram { model = model, view = view, update = update }
 
 
 
@@ -20,8 +16,8 @@ type alias Model =
     }
 
 
-model : Model
-model =
+init : Model
+init =
     Model False ""
 
 
@@ -42,14 +38,15 @@ update msg model =
                 isReverse =
                     not model.reverse
             in
-                { model
-                    | reverse = isReverse
-                    , value = (String.reverse model.value)
-                }
+            { model
+                | reverse = isReverse
+                , value = String.reverse model.value
+            }
 
         Mimic content ->
             if model.reverse then
-                { model | value = (String.reverse content) }
+                { model | value = String.reverse content }
+
             else
                 { model | value = content }
 
@@ -64,28 +61,39 @@ view model =
         [ checkbox ToggleReverse
             "Reverse"
         , input
-            [ placeholder "Type Something!", onInput Mimic, myStyle ]
+            [ placeholder "Type Something!"
+            , onInput Mimic
+            , style "width" "100%"
+            , style "height" "40px"
+            , style "padding" "10px 0"
+            , style "font-size" "2em"
+            , style "text-align" "center"
+            ]
             []
-        , div [ myStyle ] [ text (toString model) ]
-        ]
-
-
-myStyle : Attribute msg
-myStyle =
-    style
-        [ ( "width", "100%" )
-        , ( "height", "40px" )
-        , ( "padding", "10px 0" )
-        , ( "font-size", "2em" )
-        , ( "text-align", "center" )
+        , div
+            [ style "width" "100%"
+            , style "height" "40px"
+            , style "padding" "10px 0"
+            , style "font-size" "2em"
+            , style "text-align" "center"
+            ]
+            [ text model.value ]
         ]
 
 
 checkbox : msg -> String -> Html msg
 checkbox msg name =
     label
-        [ style [ ( "padding", "20px" ) ]
-        ]
+        [ style "padding" "20px" ]
         [ input [ type_ "checkbox", onClick msg ] []
         , text name
         ]
+
+
+
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.sandbox { init = init, view = view, update = update }
