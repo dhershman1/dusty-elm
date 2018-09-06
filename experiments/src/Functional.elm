@@ -1,19 +1,9 @@
-module Main exposing (Model, Msg(..), btnStyles, expand, init, main, myStyle, update, view, zip)
+module Functional exposing (Model, Msg(..), view)
 
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
-
-
-
--- MAIN
-
-
-main : Program () Model Msg
-main =
-    Browser.sandbox { init = init, view = view, update = update }
-
 
 
 -- MODEL
@@ -100,3 +90,10 @@ myStyle =
     , style "text-align" "center"
     , style "padding" "20px 20px"
     ]
+
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.sandbox { init = init, view = view, update = update }

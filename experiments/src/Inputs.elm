@@ -1,3 +1,5 @@
+module Inputs exposing (Model, Msg(..), view)
+
 import Browser
 import Html exposing (Html, Attribute, div, input, text)
 import Html.Attributes exposing (..)

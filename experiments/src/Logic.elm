@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), checkbox, init, main, update, view)
+module Logic exposing (Model, Msg(..), view)
 
 import Browser
 import Html exposing (..)
