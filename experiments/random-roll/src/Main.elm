@@ -1,18 +1,10 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Random
-
-
-main =
-    Html.program
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
 
 
 type alias Model =
@@ -20,8 +12,8 @@ type alias Model =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( Model 1, Cmd.none )
 
 
@@ -55,18 +47,27 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-    div [ myStyle ]
-        [ h1 [] [ text (toString model.dieFace) ]
+    div
+        [ style "width" "100%"
+        , style "height" "40px"
+        , style "padding" "10px 0"
+        , style "font-size" "2em"
+        , style "text-align" "center"
+        ]
+        [ h1 [] [ text (String.fromInt model.dieFace) ]
         , button [ onClick Roll ] [ text "Roll" ]
         ]
 
 
-myStyle : Attribute msg
-myStyle =
-    style
-        [ ( "width", "100%" )
-        , ( "height", "40px" )
-        , ( "padding", "10px 0" )
-        , ( "font-size", "2em" )
-        , ( "text-align", "center" )
-        ]
+
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
