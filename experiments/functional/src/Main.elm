@@ -1,13 +1,18 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), btnStyles, expand, init, main, myStyle, update, view, zip)
 
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-main : Program Never Model Msg
+
+-- MAIN
+
+
+main : Program () Model Msg
 main =
-    beginnerProgram { model = model, view = view, update = update }
+    Browser.sandbox { init = init, view = view, update = update }
 
 
 
@@ -22,44 +27,19 @@ type alias Model =
     }
 
 
-model : Model
-model =
+init : Model
+init =
     Model [ "Tom", "Sue", "Bob" ] [ 45, 31, 26 ] [ ( "", 0 ) ] 0
 
 
 zip : List a -> List b -> List ( a, b )
 zip xs ys =
-    case ( xs, ys ) of
-        ( x :: xBack, y :: yBack ) ->
-            ( x, y ) :: zip xBack yBack
-
-        ( _, _ ) ->
-            []
+    List.map2 Tuple.pair xs ys
 
 
-length : List a -> number
-length list =
-    case list of
-        [] ->
-            0
-
-        first :: rest ->
-            1 + length rest
-
-
-
--- VIEW
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ div [ myStyle ] [ text "Zipped: ", text (toString model.zipped) ]
-        , div [ myStyle ] [ text "Length: ", text (toString model.lengthed) ]
-        , button [ onClick RunZip, btnStyles ] [ text "Zip" ]
-        , button [ onClick RunLength, btnStyles ] [ text "Length" ]
-        , button [ onClick Reset, btnStyles ] [ text "Reset" ]
-        ]
+expand : ( String, Int ) -> Html msg
+expand tup =
+    span [] [ text (Tuple.first tup ++ " " ++ String.fromInt (Tuple.second tup)) ]
 
 
 
@@ -72,11 +52,6 @@ type Msg
     | Reset
 
 
-stringList : List a -> List String
-stringList val =
-    List.map toString val
-
-
 update : Msg -> Model -> Model
 update msg model =
     case msg of
@@ -84,7 +59,7 @@ update msg model =
             { model | zipped = zip model.names model.nums }
 
         RunLength ->
-            { model | lengthed = length (model.names ++ stringList model.nums) }
+            { model | lengthed = List.length model.names + List.length model.nums }
 
         Reset ->
             { model
@@ -93,22 +68,35 @@ update msg model =
             }
 
 
-btnStyles : Attribute msg
+
+-- VIEW
+
+
+view : Model -> Html Msg
+view model =
+    div []
+        [ div myStyle (List.map expand model.zipped)
+        , div myStyle [ text "Length: ", text (String.fromInt model.lengthed) ]
+        , button (List.concat [ [ onClick RunZip ], btnStyles ]) [ text "Zip" ]
+        , button (List.concat [ [ onClick RunLength ], btnStyles ]) [ text "Length" ]
+        , button (List.concat [ [ onClick Reset ], btnStyles ]) [ text "Reset" ]
+        ]
+
+
+btnStyles : List (Attribute msg)
 btnStyles =
-    style
-        [ ( "width", "33%" )
-        , ( "font-size", "1em" )
-        , ( "text-align", "center" )
-        , ( "padding", "10px 10px" )
-        ]
+    [ style "width" "33%"
+    , style "font-size" "1em"
+    , style "text-align" "center"
+    , style "padding" "10px 10px"
+    ]
 
 
-myStyle : Attribute msg
+myStyle : List (Attribute msg)
 myStyle =
-    style
-        [ ( "width", "100%" )
-        , ( "height", "40px" )
-        , ( "padding", "20px 20px" )
-        , ( "font-size", "2em" )
-        , ( "text-align", "center" )
-        ]
+    [ style "width" "100%"
+    , style "height" "40px"
+    , style "font-size" "2em"
+    , style "text-align" "center"
+    , style "padding" "20px 20px"
+    ]
