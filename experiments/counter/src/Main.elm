@@ -1,29 +1,14 @@
 module Main exposing (main)
 
-import Html exposing (..)
+import Browser
+import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
-
-
-main : Program Never number Msg
-main =
-    beginnerProgram { model = 0, view = view, update = update }
-
-
-view : a -> Html Msg
-view model =
-    div []
-        [ button [ onClick Decrement ] [ text "-" ]
-        , span [] [ text (toString model) ]
-        , button [ onClick Increment ] [ text "+" ]
-        ]
-
 
 type Msg
     = Increment
     | Decrement
 
-
-update : Msg -> number -> number
+update : Msg -> Int -> Int
 update msg model =
     case msg of
         Increment ->
@@ -31,3 +16,14 @@ update msg model =
 
         Decrement ->
             model - 1
+
+view model =
+    div []
+        [ button [ onClick Decrement ] [ text "-" ]
+        , div [] [ text (String.fromInt model) ]
+        , button [ onClick Increment ] [ text "+" ]
+        ]
+
+main : Program () Int Msg
+main =
+    Browser.sandbox { init = 0, view = view, update = update }
