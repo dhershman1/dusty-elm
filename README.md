@@ -1,11 +1,9 @@
 # dusty-elm
 Little elm sandbox fun and experimentation
 
-## Install elm
+**Updated for v0.19.0** of Elm
 
-`npm i -g elm`
-
-## Easy plug and play
+## Usage
 
 - cd into a small app (Each folder is its own app)
 - run `elm make src/Main.elm --output=main.html`
