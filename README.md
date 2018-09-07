@@ -3,7 +3,7 @@ Little elm sandbox fun and experimentation
 
 **Updated for v0.19.0** of Elm
 
-> **Side Note** It is very broken right now, I am in the middle of re factoring how a lot of this works which requires me to rethink the process of each experiement
+**Currently in the middle of a revamp for the experiments layout**
 
 ## Usage
 

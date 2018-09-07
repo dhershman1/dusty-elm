@@ -12,7 +12,8 @@ import Mimic as Mimic
 import Rando as Rando
 
 
-
+-- Need to rethink this approach I way over complicated the layout here
+-- Problems with external components galore
 -- MODEL
 
 
