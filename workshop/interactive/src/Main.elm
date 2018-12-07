@@ -12,6 +12,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
+
 -- MODEL
 
 
@@ -29,8 +30,10 @@ initialModel =
 update msg model =
     if msg.description == "ClickedTag" then
         { model | selectedTag = msg.data }
+
     else
         model
+
 
 
 -- VIEW
@@ -89,7 +92,8 @@ viewTag selectedTagName tagName =
     in
     button
         [ class ("tag-pill " ++ otherClass)
-        , onClick { description = "ClickedTag", data = tagName }]
+        , onClick { description = "ClickedTag", data = tagName }
+        ]
         [ text tagName ]
 
 
